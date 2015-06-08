@@ -37,6 +37,31 @@ if debian?
     action :restart
   end
 
+  if node['aegir3']['webserver'] == 'nginx'
+    %w(
+      nginx
+      php5-cli
+      php5-mysql
+      php5-fpm
+      php5-gd
+    ).each do |pkg|
+      package pkg
+    end
+
+    %w(
+      /foo
+      /foo/bar
+      /foo/bar/baz
+    ).each do |path|
+      directory path do
+        owner 'root'
+        group 'root'
+        mode '0755'
+        action :create
+      end
+    end
+  end
+
   package 'aegir3' do
     response_file 'aegir3.seed.erb'
     action :install
@@ -46,8 +71,10 @@ if debian?
   include_recipe 'php::ini'
 
   # Restart apache for php.ini changes to take effect
-  service 'apache2' do
-    supports restart: true, reload: true
-    action :reload
+  if node['aegir3']['webserver'] == 'apache2'
+    service 'apache2' do
+      supports restart: true, reload: true
+      action :reload
+    end
   end
 end
