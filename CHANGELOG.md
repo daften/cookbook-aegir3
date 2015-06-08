@@ -14,3 +14,4 @@ This file is used to list changes made in each version of the aegir3 cookbook.
 
 0.1.2 (2015-06-09)
 ------------------
+- Dieter Blomme - Update MySQL for new mysql cookbook + separation from aegir install

@@ -19,12 +19,13 @@
 # limitations under the License.
 #
 
-include_recipe 'mysql::server'
-include_recipe 'aegir3::mysql_secure'
-include_recipe 'mysql_tuning::default'
-
-# Restart MySQL to take changed config into account.
-service 'mysql' do
-  supports restart: true, reload: true
-  action :restart
+mysql_service 'default' do
+  version '5.6'
+  bind_address '0.0.0.0'
+  port '3306'
+  initial_root_password node['mysql']['server_root_password']
+  action [:create, :start]
 end
+
+include_recipe 'mysql_tuning::default'
+include_recipe 'aegir3::mysql_secure'
