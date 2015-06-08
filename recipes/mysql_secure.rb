@@ -23,9 +23,9 @@ password_option = node['mysql']['server_root_password'].empty? ? '' : '-p'
 
 execute 'Secure MySQL Installation' do
   command "mysql -u root \
-  #{password_option} \
-  #{node['mysql']['server_root_password']} \
-   < /tmp/mysql_secure_installation.sql"
+#{password_option}\
+#{node['mysql']['server_root_password']} \
+< /tmp/mysql_secure_installation.sql"
   action :nothing
 end
 
