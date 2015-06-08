@@ -71,10 +71,9 @@ if debian?
   include_recipe 'php::ini'
 
   # Restart apache for php.ini changes to take effect
-  if node['aegir3']['webserver'] == 'apache2'
-    service 'apache2' do
-      supports restart: true, reload: true
-      action :reload
-    end
+  service 'apache2' do
+    supports restart: true, reload: true
+    action :reload
+    only_if { node['aegir3']['webserver'] == 'apache2' }
   end
 end
