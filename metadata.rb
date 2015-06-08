@@ -22,5 +22,5 @@ end
 depends 'chef-sugar'
 depends 'apt'
 depends 'php'
-depends 'mysql', '< 6.0.0'
+depends 'mysql', '>= 6.0.0'
 depends 'mysql_tuning'
