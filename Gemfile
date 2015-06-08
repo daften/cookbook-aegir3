@@ -19,14 +19,14 @@ group :unit do
   gem 'foodcritic'
 end
 
-group :integration do
-  gem 'berkshelf'
-  gem 'test-kitchen'
-  gem 'kitchen-vagrant'
-end
-
-group :development do
-  gem 'guard'
-  gem 'guard-foodcritic'
-  gem 'guard-kitchen'
-end
+# group :integration do
+#   gem 'berkshelf'
+#   gem 'test-kitchen'
+#   gem 'kitchen-vagrant'
+# end
+#
+# group :development do
+#   gem 'guard'
+#   gem 'guard-foodcritic'
+#   gem 'guard-kitchen'
+# end

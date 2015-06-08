@@ -22,5 +22,5 @@
 include_recipe 'chef-sugar::default'
 
 include_recipe "aegir3::#{node['aegir3']['install_method']}"
-include_recipe "aegir3::extensions"
-include_recipe "aegir3::ssh_keygen"
+include_recipe 'aegir3::extensions'
+include_recipe 'aegir3::ssh_keygen'

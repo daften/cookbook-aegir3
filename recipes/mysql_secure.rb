@@ -19,12 +19,17 @@
 # limitations under the License.
 #
 
-execute "Secure MySQL Installation" do
-  command "mysql -u root #{node['mysql']['server_root_password'].empty? ? '' : '-p' }#{node['mysql']['server_root_password']} < /tmp/mysql_secure_installation.sql"
+password_option = node['mysql']['server_root_password'].empty? ? '' : '-p'
+
+execute 'Secure MySQL Installation' do
+  command "mysql -u root \
+#{password_option}\
+#{node['mysql']['server_root_password']} \
+< /tmp/mysql_secure_installation.sql"
   action :nothing
 end
 
-cookbook_file "/tmp/mysql_secure_installation.sql" do
-  source "mysql_secure_installation.sql"
-  notifies :run, "execute[Secure MySQL Installation]", :immediately
+cookbook_file '/tmp/mysql_secure_installation.sql' do
+  source 'mysql_secure_installation.sql'
+  notifies :run, 'execute[Secure MySQL Installation]', :immediately
 end

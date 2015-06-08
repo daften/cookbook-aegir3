@@ -19,29 +19,31 @@
 # limitations under the License.
 #
 
-# We need to do this like this, since usermod (through the user cookbooK) doesn't work
+# We need to do this like this, since usermod (through the user cookbooK)
+# doesn't work
 
 # Create the .ssh directory
 directory node['aegir3']['install_folder'] + '/.ssh' do
-  owner     "aegir"
-  group     "aegir"
-  mode      '0755'
+  owner 'aegir'
+  group 'aegir'
+  mode '0755'
   recursive true
-  only_if { Dir.exists?(node['aegir3']['install_folder']) }
+  only_if { Dir.exist?(node['aegir3']['install_folder']) }
 end
 
-fqdn, my_home = node['fqdn'], node['aegir3']['install_folder']
-e = execute "create ssh keypair for aegir" do
-  cwd       node['aegir3']['install_folder']
-  user      "aegir"
-  command   <<-KEYGEN.gsub(/^ +/, '')
+fqdn = node['fqdn']
+my_home = node['aegir3']['install_folder']
+execute 'create ssh keypair for aegir' do
+  cwd node['aegir3']['install_folder']
+  user 'aegir'
+  command <<-KEYGEN.gsub(/^ +/, '')
     ssh-keygen -t dsa -f #{my_home}/.ssh/id_dsa -N '' \
       -C 'aegir@#{fqdn}-#{Time.now.strftime('%FT%T%z')}'
     chmod 0600 #{my_home}/.ssh/id_dsa
     chmod 0644 #{my_home}/.ssh/id_dsa.pub
   KEYGEN
-  action    :run
+  action :run
 
-  creates   "#{my_home}/.ssh/id_dsa"
-  only_if { Dir.exists?(node['aegir3']['install_folder']) }
+  creates "#{my_home}/.ssh/id_dsa"
+  only_if { Dir.exist?(node['aegir3']['install_folder']) }
 end

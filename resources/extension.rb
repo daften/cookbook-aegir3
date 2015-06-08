@@ -22,7 +22,7 @@
 actions :add, :remove
 default_action :add
 
-attribute :name, :kind_of => String, :name_attribute => true
-attribute :repository_provision, :kind_of => [String, NilClass]
-attribute :repository_hosting, :kind_of => [String, NilClass]
-attribute :version, :kind_of => [String, NilClass]
+attribute :name, kind_of: String, name_attribute: true
+attribute :repository_provision, kind_of: [String, NilClass]
+attribute :repository_hosting, kind_of: [String, NilClass]
+attribute :version, kind_of: [String, NilClass]

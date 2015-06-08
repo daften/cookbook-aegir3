@@ -20,25 +20,31 @@
 #
 
 action :add do
-  if !new_resource.repository_provision.nil?
+  unless new_resource.repository_provision.nil?
     Chef::Log.info "Installing provision module from #{new_resource.name}"
-    git "#{node['aegir3']['install_folder']}/.drush/provision_#{new_resource.name}" do
+    git "#{node['aegir3']['install_folder']}/.drush/\
+provision_#{new_resource.name}" do
       repository new_resource.repository_provision
       revision new_resource.version
       action :sync
-      user "aegir"
-      group "aegir"
+      user 'aegir'
+      group 'aegir'
     end
     loc = Mixlib::ShellOut.new('drush cc drush',
-      :user => 'aegir', :group => 'aegir', :environment => {'HOME' => Dir.home('aegir')})
+                               user: 'aegir',
+                               group: 'aegir',
+                               environment: { 'HOME' => Dir.home('aegir') })
     loc.run_command
     new_resource.updated_by_last_action(true)
   end
 
-  if !new_resource.repository_hosting.nil?
+  unless new_resource.repository_hosting.nil?
     Chef::Log.info("Installing hosting module from #{new_resource.name}")
-    loc = Mixlib::ShellOut.new('drush site-alias @hostmaster --component="site_path"',
-      :user => 'aegir', :group => 'aegir', :environment => {'HOME' => Dir.home('aegir')})
+    loc = Mixlib::ShellOut.new('drush site-alias @hostmaster\
+--component="site_path"',
+                               user: 'aegir',
+                               group: 'aegir',
+                               environment: { 'HOME' => Dir.home('aegir') })
     loc.run_command
     location_hostmaster = loc.stdout.strip
 
@@ -46,8 +52,8 @@ action :add do
       repository new_resource.repository_hosting
       revision new_resource.version
       action :sync
-      user "aegir"
-      group "aegir"
+      user 'aegir'
+      group 'aegir'
     end
     new_resource.updated_by_last_action(true)
   end
@@ -55,16 +61,20 @@ end
 
 action :remove do
   Chef::Log.info "Removing #{new_resource.name}"
-  if !new_resource.repository_provision.nil?
-    directory "#{node['aegir3']['install_folder']}/.drush/provision_#{new_resource.name}" do
+  unless new_resource.repository_provision.nil?
+    directory "#{node['aegir3']['install_folder']}/.drush/\
+provision_#{new_resource.name}" do
       recursive true
       action :delete
     end
     new_resource.updated_by_last_action(true)
   end
-  if !new_resource.repository_hosting.nil?
-    loc = Mixlib::ShellOut.new('drush site-alias @hostmaster --component="site_path"',
-      :user => 'aegir', :group => 'aegir', :environment => {'HOME' => Dir.home('aegir')})
+  unless new_resource.repository_hosting.nil?
+    loc = Mixlib::ShellOut.new('drush site-alias @hostmaster \
+     --component="site_path"',
+                               user: 'aegir',
+                               group: 'aegir',
+                               environment: { 'HOME' => Dir.home('aegir') })
     loc.run_command
     location_hostmaster = loc.stdout.strip
     directory location_hostmaster + "/modules/hosting_#{new_resource.name}" do

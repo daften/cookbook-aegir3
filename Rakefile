@@ -25,7 +25,7 @@ namespace :style do
 end
 
 desc 'Run all style checks'
-task style: ['style:chef']
+task style: ['style:ruby', 'style:chef']
 
 # # Integration tests. Kitchen.ci
 # namespace :integration do
