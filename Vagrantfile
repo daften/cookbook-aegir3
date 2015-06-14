@@ -80,5 +80,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       'recipe[aegir3::mysql]',
       'recipe[aegir3::default]'
     ]
+    chef.json = {
+      'aegir3' => {
+        'webserver' => 'nginx'
+      }
+    }
   end
 end
