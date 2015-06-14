@@ -5,7 +5,7 @@ default['aegir3']['install_folder'] = '/var/aegir'
 default['aegir3']['frontend'] = 'localhost'
 default['aegir3']['admin_email'] = 'webmaster@localhost'
 default['aegir3']['webserver'] = 'apache2'
-default['aegir3']['db_host'] = 'localhost'
+default['aegir3']['db_host'] = '127.0.0.1'
 
 default['mysql']['server_root_password'] = 'ilikecookies'
 default['mysql_tuning']['tuning.cnf']['mysqld']['max_allowed_packet'] = '16M'

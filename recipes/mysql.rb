@@ -20,7 +20,7 @@
 #
 
 mysql_service 'default' do
-  version '5.6'
+  version '5.5'
   bind_address '0.0.0.0'
   port '3306'
   initial_root_password node['mysql']['server_root_password']
@@ -28,3 +28,6 @@ mysql_service 'default' do
 end
 
 include_recipe 'mysql_tuning::default'
+if node['aegir3']['db_host'] == 'localhost'
+  include_recipe 'aegir3::mysql_secure'
+end
