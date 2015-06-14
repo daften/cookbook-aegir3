@@ -69,8 +69,8 @@ if debian?
 
   bash 'Enable tasks queue' do
     user 'aegir'
-    cwd "#{node['aegir3']['install_folder']}"
-    environment 'HOME' => "#{node['aegir3']['install_folder']}"
+    cwd node['aegir3']['install_folder']
+    environment 'HOME' => node['aegir3']['install_folder']
     code 'drush @hostmaster vset --format=integer hosting_queue_tasks_enabled 1'
   end
 end
