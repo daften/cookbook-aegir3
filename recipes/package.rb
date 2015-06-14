@@ -66,4 +66,11 @@ if debian?
     action :reload
     only_if { node['aegir3']['webserver'] == 'apache2' }
   end
+
+  bash 'Enable tasks queue' do
+    user 'aegir'
+    cwd "#{node['aegir3']['install_folder']}"
+    environment 'HOME' => "#{node['aegir3']['install_folder']}"
+    code 'drush @hostmaster vset --format=integer hosting_queue_tasks_enabled 1'
+  end
 end
