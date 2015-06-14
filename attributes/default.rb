@@ -7,6 +7,7 @@ default['aegir3']['admin_email'] = 'webmaster@localhost'
 default['aegir3']['webserver'] = 'apache2'
 default['aegir3']['db_host'] = 'localhost'
 
+default['mysql']['server_root_password'] = 'ilikecookies'
 default['mysql_tuning']['tuning.cnf']['mysqld']['max_allowed_packet'] = '16M'
 
 if node['aegir3']['webserver'] == 'nginx'
