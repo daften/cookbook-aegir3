@@ -47,10 +47,10 @@ if debian?
 
     # Override the nginx conf template.
     begin
-      override = resources(:template => "nginx.conf")
-      override.cookbook "aegir3"
+      override = resources(template: 'nginx.conf')
+      override.cookbook 'aegir3'
     rescue Chef::Exceptions::ResourceNotFound
-      Chef::Log.warn "Template not found!"
+      Chef::Log.warn 'Template not found!'
     end
   end
 
