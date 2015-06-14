@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+# This shouldn't be used on multi-server setups as is.
+
 password_option = node['mysql']['server_root_password'].empty? ? '' : '-p'
 
 execute 'Secure MySQL Installation' do
