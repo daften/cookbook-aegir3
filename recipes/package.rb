@@ -28,14 +28,29 @@ if debian?
   end
 
   if node['aegir3']['webserver'] == 'nginx'
+    directory '/var/lib/nginx' do
+      owner 'root'
+      group 'root'
+      mode '0755'
+    end
+
+    include_recipe 'nginx'
+
     %w(
-      nginx
       php5-cli
       php5-mysql
       php5-fpm
       php5-gd
     ).each do |pkg|
       package pkg
+    end
+
+    # Override the nginx conf template.
+    begin
+      override = resources(:template => "nginx.conf")
+      override.cookbook "aegir3"
+    rescue Chef::Exceptions::ResourceNotFound
+      Chef::Log.warn "Template not found!"
     end
   end
 
