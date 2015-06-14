@@ -37,19 +37,6 @@ if debian?
     ).each do |pkg|
       package pkg
     end
-
-    %w(
-      /foo
-      /foo/bar
-      /foo/bar/baz
-    ).each do |path|
-      directory path do
-        owner 'root'
-        group 'root'
-        mode '0755'
-        action :create
-      end
-    end
   end
 
   package 'aegir3' do
@@ -60,11 +47,13 @@ if debian?
   # Provide the option to manipulate php.ini
   include_recipe 'php::ini'
 
-  # Restart apache for php.ini changes to take effect
-  service 'apache2' do
-    supports restart: true, reload: true
-    action :reload
-    only_if { node['aegir3']['webserver'] == 'apache2' }
+  if node['aegir3']['webserver'] == 'apache2'
+    # Restart apache for php.ini changes to take effect
+    service 'apache2' do
+      supports restart: true, reload: true
+      action :reload
+      only_if { node['aegir3']['webserver'] == 'apache2' }
+    end
   end
 
   bash 'Enable tasks queue' do
