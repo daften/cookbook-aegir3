@@ -27,19 +27,16 @@ if debian?
     key 'http://debian.aegirproject.org/key.asc'
   end
 
-  include_recipe 'mysql::server'
-  include_recipe 'aegir3::mysql_secure'
-  include_recipe 'mysql_tuning::default'
-
-  # Restart MySQL to take changed config into account.
-  service 'mysql' do
-    supports restart: true, reload: true
-    action :restart
-  end
-
   if node['aegir3']['webserver'] == 'nginx'
+    directory '/var/lib/nginx' do
+      owner 'root'
+      group 'root'
+      mode '0755'
+    end
+
+    include_recipe 'nginx'
+
     %w(
-      nginx
       php5-cli
       php5-mysql
       php5-fpm
@@ -48,17 +45,12 @@ if debian?
       package pkg
     end
 
-    %w(
-      /foo
-      /foo/bar
-      /foo/bar/baz
-    ).each do |path|
-      directory path do
-        owner 'root'
-        group 'root'
-        mode '0755'
-        action :create
-      end
+    # Override the nginx conf template.
+    begin
+      override = resources(template: 'nginx.conf')
+      override.cookbook 'aegir3'
+    rescue Chef::Exceptions::ResourceNotFound
+      Chef::Log.warn 'Template not found!'
     end
   end
 
@@ -70,10 +62,19 @@ if debian?
   # Provide the option to manipulate php.ini
   include_recipe 'php::ini'
 
-  # Restart apache for php.ini changes to take effect
-  service 'apache2' do
-    supports restart: true, reload: true
-    action :reload
-    only_if { node['aegir3']['webserver'] == 'apache2' }
+  if node['aegir3']['webserver'] == 'apache2'
+    # Restart apache for php.ini changes to take effect
+    service 'apache2' do
+      supports restart: true, reload: true
+      action :reload
+      only_if { node['aegir3']['webserver'] == 'apache2' }
+    end
+  end
+
+  bash 'Enable tasks queue' do
+    user 'aegir'
+    cwd node['aegir3']['install_folder']
+    environment 'HOME' => node['aegir3']['install_folder']
+    code 'drush @hostmaster vset --format=integer hosting_queue_tasks_enabled 1'
   end
 end

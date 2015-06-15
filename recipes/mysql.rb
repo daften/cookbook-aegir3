@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: aegir3
-# Recipe:: mysql_secure
+# Recipe:: mysql
 #
 # Author:: Dieter Blomme <dieterblomme@gmail.com>
 #
@@ -19,19 +19,15 @@
 # limitations under the License.
 #
 
-# This shouldn't be used on multi-server setups as is.
-
-password_option = node['mysql']['server_root_password'].empty? ? '' : '-p'
-
-execute 'Secure MySQL Installation' do
-  command "mysql -S /var/run/mysql-default/mysqld.sock -u root \
-#{password_option}\
-#{node['mysql']['server_root_password']} \
-< /tmp/mysql_secure_installation.sql"
-  action :nothing
+mysql_service 'default' do
+  version '5.5'
+  bind_address '0.0.0.0'
+  port '3306'
+  initial_root_password node['mysql']['server_root_password']
+  action [:create, :start]
 end
 
-cookbook_file '/tmp/mysql_secure_installation.sql' do
-  source 'mysql_secure_installation.sql'
-  notifies :run, 'execute[Secure MySQL Installation]', :immediately
+include_recipe 'mysql_tuning::default'
+if node['aegir3']['db_host'] == 'localhost'
+  include_recipe 'aegir3::mysql_secure'
 end

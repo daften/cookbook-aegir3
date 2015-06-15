@@ -77,7 +77,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
     chef.run_list = [
       'recipe[apt::default]',
+      'recipe[aegir3::mysql]',
       'recipe[aegir3::default]'
     ]
+    chef.json = {
+      'aegir3' => {
+        'webserver' => 'nginx'
+      }
+    }
   end
 end
