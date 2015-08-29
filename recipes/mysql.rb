@@ -28,6 +28,6 @@ mysql_service 'default' do
 end
 
 include_recipe 'mysql_tuning::default'
-if node['aegir3']['db_host'] == 'localhost'
+if node['aegir3']['db_host'] == '127.0.0.1'
   include_recipe 'aegir3::mysql_secure'
 end
