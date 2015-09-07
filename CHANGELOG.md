@@ -22,3 +22,8 @@ This file is used to list changes made in each version of the aegir3 cookbook.
 - Dieter Blomme - Only use mysql_secure for localhost
 - Dieter Blomme - Use Nginx cookbook
 - Dieter Blomme - Various rubocop en foodcritic fixes
+
+0.1.3 (2015-09-07)
+------------------
+- Dieter Blomme - Change default web server in Vagrantfile
+- Dieter Blomme - Only secure install on localhost install
