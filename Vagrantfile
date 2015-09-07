@@ -82,7 +82,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ]
     chef.json = {
       'aegir3' => {
-        'webserver' => 'nginx'
+        'webserver' => 'apache2'
       }
     }
   end
