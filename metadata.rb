@@ -25,3 +25,6 @@ depends 'php'
 depends 'nginx'
 depends 'mysql', '>= 6.0.0'
 depends 'mysql_tuning'
+
+source_url 'https://github.com/daften/cookbook-aegir3' if respond_to?(:source_url)
+issues_url 'https://github.com/daften/cookbook-aegir3/issues' if respond_to?(:issues_url)
