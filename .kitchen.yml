@@ -6,12 +6,25 @@ provisioner:
   name: chef_solo
 
 platforms:
-  - name: ubuntu-12.04
   - name: ubuntu-14.04
+  - name: ubuntu-16.04
+  - name: debian-7.8
 
 suites:
   - name: default
     run_list:
       - recipe[apt::default]
+      - recipe[aegir3::default]
+    attributes:
+    excludes:
+      - ubuntu-14.04
+      - ubuntu-16.04
+      - debian-7.8
+
+  - name: mysql_secure
+    run_list:
+      - recipe[apt::default]
+      - recipe[aegir3::mysql]
+      - recipe[aegir3::mysql_secure]
       - recipe[aegir3::default]
     attributes:
