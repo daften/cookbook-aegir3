@@ -23,7 +23,7 @@ depends 'chef-sugar'
 depends 'apt'
 depends 'php'
 depends 'nginx'
-depends 'mysql', '>= 6.0.0'
+depends 'mysql', '~> 6.0'
 depends 'mysql_tuning'
 
 source_url 'https://github.com/daften/cookbook-aegir3' if respond_to?(:source_url)
