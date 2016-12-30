@@ -23,8 +23,8 @@ depends 'chef-sugar'
 depends 'apt'
 depends 'php'
 depends 'nginx'
-depends 'mysql', '>= 7.1.0'
-depends 'mysql_tuning'
+depends 'mysql', '~> 7.1.0'
+depends 'mysql_tuning', '~> 0.7.0'
 
 source_url 'https://github.com/daften/cookbook-aegir3' if respond_to?(:source_url)
 issues_url 'https://github.com/daften/cookbook-aegir3/issues' if respond_to?(:issues_url)
