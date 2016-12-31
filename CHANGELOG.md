@@ -27,3 +27,11 @@ This file is used to list changes made in each version of the aegir3 cookbook.
 ------------------
 - Dieter Blomme - Change default web server in Vagrantfile
 - Dieter Blomme - Only secure install on localhost install
+
+0.1.4 (2016-12-31)
+------------------
+- Dieter Blomme - Add sources and issues URL
+- Dieter Blomme - Add rubocop configuration
+- Dieter Blomme - Update kitchen config for ubuntu 16.04 and debian 7.8
+- Dieter Blomme - Start support for ubuntu 16.04
+- Dieter Blomme - Pin MySQL cookbook to 7.x
