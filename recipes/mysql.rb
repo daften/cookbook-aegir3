@@ -20,7 +20,7 @@
 #
 
 mysql_service 'default' do
-  version '5.5'
+  version node['mysql']['version']
   bind_address '0.0.0.0'
   port '3306'
   initial_root_password node['mysql']['server_root_password']
