@@ -9,6 +9,7 @@ default['aegir3']['db_host'] = '127.0.0.1'
 
 default['mysql']['server_root_password'] = 'ilikecookies'
 default['mysql_tuning']['tuning.cnf']['mysqld']['max_allowed_packet'] = '16M'
+default['mysql_tuning']['logging.cnf']['mysqld']['slow_query_log'] = 'OFF'
 default['mysql']['version'] = if node['platform'] == 'ubuntu' && node['platform_version'].to_f >= 16.04
                                 '5.7'
                               else
