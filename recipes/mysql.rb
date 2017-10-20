@@ -19,15 +19,15 @@
 # limitations under the License.
 #
 
-mysql_service 'default' do
-  version node['mysql']['version']
-  bind_address '0.0.0.0'
-  port '3306'
-  initial_root_password node['mysql']['server_root_password']
+mysql_service "default" do
+  version node["mysql"]["version"]
+  bind_address "0.0.0.0"
+  port "3306"
+  initial_root_password node["mysql"]["server_root_password"]
   action [:create, :start]
 end
 
-include_recipe 'mysql_tuning::default'
-if node['aegir3']['db_host'] == '127.0.0.1'
-  include_recipe 'aegir3::mysql_secure'
+include_recipe "mysql_tuning::default"
+if node["aegir3"]["db_host"] == "127.0.0.1"
+  include_recipe "aegir3::mysql_secure"
 end

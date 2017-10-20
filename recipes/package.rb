@@ -20,21 +20,21 @@
 #
 
 if debian?
-  apt_repository 'aegir-stable' do
-    uri 'http://debian.aegirproject.org'
-    distribution 'stable'
-    components ['main']
-    key 'http://debian.aegirproject.org/key.asc'
+  apt_repository "aegir-stable" do
+    uri "http://debian.aegirproject.org"
+    distribution "stable"
+    components ["main"]
+    key "http://debian.aegirproject.org/key.asc"
   end
 
-  if node['aegir3']['webserver'] == 'nginx'
-    directory '/var/lib/nginx' do
-      owner 'root'
-      group 'root'
-      mode '0755'
+  if node["aegir3"]["webserver"] == "nginx"
+    directory "/var/lib/nginx" do
+      owner "root"
+      group "root"
+      mode "0755"
     end
 
-    include_recipe 'nginx'
+    include_recipe "nginx"
 
     %w(
       php5-cli
@@ -47,34 +47,34 @@ if debian?
 
     # Override the nginx conf template.
     begin
-      override = resources(template: 'nginx.conf')
-      override.cookbook 'aegir3'
+      override = resources(template: "nginx.conf")
+      override.cookbook "aegir3"
     rescue Chef::Exceptions::ResourceNotFound
-      Chef::Log.warn 'Template not found!'
+      Chef::Log.warn "Template not found!"
     end
   end
 
-  package 'aegir3' do
-    response_file 'aegir3.seed.erb'
+  package "aegir3" do
+    response_file "aegir3.seed.erb"
     action :install
   end
 
   # Provide the option to manipulate php.ini
-  include_recipe 'php::ini'
+  include_recipe "php::ini"
 
-  if node['aegir3']['webserver'] == 'apache2'
+  if node["aegir3"]["webserver"] == "apache2"
     # Restart apache for php.ini changes to take effect
-    service 'apache2' do
+    service "apache2" do
       supports restart: true, reload: true
       action :reload
-      only_if { node['aegir3']['webserver'] == 'apache2' }
+      only_if { node["aegir3"]["webserver"] == "apache2" }
     end
   end
 
-  bash 'Enable tasks queue' do
-    user 'aegir'
-    cwd node['aegir3']['install_folder']
-    environment 'HOME' => node['aegir3']['install_folder']
-    code 'drush @hostmaster vset --format=integer hosting_queue_tasks_enabled 1'
+  bash "Enable tasks queue" do
+    user "aegir"
+    cwd node["aegir3"]["install_folder"]
+    environment "HOME" => node["aegir3"]["install_folder"]
+    code "drush @hostmaster vset --format=integer hosting_queue_tasks_enabled 1"
   end
 end

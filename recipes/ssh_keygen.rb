@@ -23,27 +23,27 @@
 # doesn't work
 
 # Create the .ssh directory
-directory node['aegir3']['install_folder'] + '/.ssh' do
-  owner 'aegir'
-  group 'aegir'
-  mode '0755'
+directory node["aegir3"]["install_folder"] + "/.ssh" do
+  owner "aegir"
+  group "aegir"
+  mode "0755"
   recursive true
-  only_if { Dir.exist?(node['aegir3']['install_folder']) }
+  only_if { Dir.exist?(node["aegir3"]["install_folder"]) }
 end
 
-fqdn = node['fqdn']
-my_home = node['aegir3']['install_folder']
-execute 'create ssh keypair for aegir' do
-  cwd node['aegir3']['install_folder']
-  user 'aegir'
-  command <<-KEYGEN.gsub(/^ +/, '')
-    ssh-keygen -t dsa -f #{my_home}/.ssh/id_dsa -N '' \
-      -C 'aegir@#{fqdn}-#{Time.now.strftime('%FT%T%z')}'
+fqdn = node["fqdn"]
+my_home = node["aegir3"]["install_folder"]
+execute "create ssh keypair for aegir" do
+  cwd node["aegir3"]["install_folder"]
+  user "aegir"
+  command <<-KEYGEN.gsub(/^ +/, "")
+    ssh-keygen -t dsa -f #{my_home}/.ssh/id_dsa -N "" \
+      -C "aegir@#{fqdn}-#{Time.now.strftime("%FT%T%z")}"
     chmod 0600 #{my_home}/.ssh/id_dsa
     chmod 0644 #{my_home}/.ssh/id_dsa.pub
   KEYGEN
   action :run
 
   creates "#{my_home}/.ssh/id_dsa"
-  only_if { Dir.exist?(node['aegir3']['install_folder']) }
+  only_if { Dir.exist?(node["aegir3"]["install_folder"]) }
 end
