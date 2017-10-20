@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+use_inline_resources
+
 action :add do
   unless new_resource.repository_provision.nil?
     Chef::Log.info "Installing provision module from #{new_resource.name}"
