@@ -16,6 +16,7 @@ gem 'rake'
 
 group :unit do
   gem 'rubocop'
+  gem 'cookstyle'
   gem 'foodcritic'
 end
 
