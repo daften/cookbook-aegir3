@@ -22,5 +22,5 @@ elsif node["aegir3"]["webserver"] == "apache2"
   default["php"]["conf_dir"] = "/etc/php5/apache2"
 end
 default["php"]["directives"] = {
-  "memory_limit" => "256M"
+  "memory_limit" => "256M",
 }
