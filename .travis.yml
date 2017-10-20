@@ -18,9 +18,9 @@ env:
   - KITCHEN_YAML=.kitchen.yml
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
   matrix:
-  - INSTANCE=mysql_secure-debian-7
+  - INSTANCE=mysql-secure-debian-7
   - INSTANCE=default-debian-8
-  - INSTANCE=mysql_secure-ubuntu-14.04
+  - INSTANCE=mysql-secure-ubuntu-14.04
   - INSTANCE=default-ubuntu-16.04
 
 before_script:
