@@ -1,7 +1,7 @@
 name "aegir3"
 maintainer "Picabit"
 maintainer_email "info@picabit.be"
-license "Apache 2.0"
+license "Apache-2.0"
 description "Hosting System for Drupal Sites"
 long_description IO.read(File.join(File.dirname(__FILE__), "README.md"))
 version "0.1.4"
