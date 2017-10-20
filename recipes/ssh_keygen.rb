@@ -38,7 +38,7 @@ execute "create ssh keypair for aegir" do
   user "aegir"
   command <<-KEYGEN.gsub(/^ +/, "")
     ssh-keygen -t dsa -f #{my_home}/.ssh/id_dsa -N "" \
-      -C "aegir@#{fqdn}-#{Time.now.strftime("%FT%T%z")}"
+      -C "aegir@#{fqdn}-#{Time.now.strftime('%FT%T%z')}"
     chmod 0600 #{my_home}/.ssh/id_dsa
     chmod 0644 #{my_home}/.ssh/id_dsa.pub
   KEYGEN
