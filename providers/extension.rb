@@ -37,7 +37,6 @@ provision_#{new_resource.name}" do
                                group: "aegir",
                                environment: { "HOME" => Dir.home("aegir") })
     loc.run_command
-    new_resource.updated_by_last_action(true)
   end
 
   unless new_resource.repository_hosting.nil?
@@ -57,7 +56,6 @@ provision_#{new_resource.name}" do
       user "aegir"
       group "aegir"
     end
-    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -69,7 +67,6 @@ provision_#{new_resource.name}" do
       recursive true
       action :delete
     end
-    new_resource.updated_by_last_action(true)
   end
   unless new_resource.repository_hosting.nil?
     loc = Mixlib::ShellOut.new('drush site-alias @hostmaster \
@@ -83,6 +80,5 @@ provision_#{new_resource.name}" do
       recursive true
       action :delete
     end
-    new_resource.updated_by_last_action(true)
   end
 end
