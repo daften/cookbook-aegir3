@@ -21,9 +21,9 @@
 
 # This shouldn't be used on multi-server setups as is.
 
-password_option = node['mysql']['server_root_password'].empty? ? '' : '-p'
+password_option = node["mysql"]["server_root_password"].empty? ? "" : "-p"
 
-execute 'Secure MySQL Installation' do
+execute "Secure MySQL Installation" do
   command "mysql -S /var/run/mysql-default/mysqld.sock -u root \
 #{password_option}\
 #{node['mysql']['server_root_password']} \
@@ -31,7 +31,7 @@ execute 'Secure MySQL Installation' do
   action :nothing
 end
 
-cookbook_file '/tmp/mysql_secure_installation.sql' do
-  source 'mysql_secure_installation.sql'
-  notifies :run, 'execute[Secure MySQL Installation]', :immediately
+cookbook_file "/tmp/mysql_secure_installation.sql" do
+  source "mysql_secure_installation.sql"
+  notifies :run, "execute[Secure MySQL Installation]", :immediately
 end

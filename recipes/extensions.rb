@@ -19,12 +19,12 @@
 # limitations under the License.
 #
 
-if !node['aegir3']['extensions'].nil? && !node['aegir3']['extensions'].empty?
-  node['aegir3']['extensions'].each do |extension_name, extension|
+if !node["aegir3"]["extensions"].nil? && !node["aegir3"]["extensions"].empty?
+  node["aegir3"]["extensions"].each do |extension_name, extension|
     aegir3_extension extension_name do
-      repository_provision extension['repository_provision']
-      repository_hosting extension['repository_hosting']
-      version extension['version']
+      repository_provision extension["repository_provision"]
+      repository_hosting extension["repository_hosting"]
+      version extension["version"]
     end
   end
 end

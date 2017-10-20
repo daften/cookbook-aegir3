@@ -19,6 +19,8 @@
 # limitations under the License.
 #
 
+use_inline_resources
+
 action :add do
   unless new_resource.repository_provision.nil?
     Chef::Log.info "Installing provision module from #{new_resource.name}"
@@ -27,24 +29,23 @@ provision_#{new_resource.name}" do
       repository new_resource.repository_provision
       revision new_resource.version
       action :sync
-      user 'aegir'
-      group 'aegir'
+      user "aegir"
+      group "aegir"
     end
-    loc = Mixlib::ShellOut.new('drush cc drush',
-                               user: 'aegir',
-                               group: 'aegir',
-                               environment: { 'HOME' => Dir.home('aegir') })
+    loc = Mixlib::ShellOut.new("drush cc drush",
+                               user: "aegir",
+                               group: "aegir",
+                               environment: { "HOME" => Dir.home("aegir") })
     loc.run_command
-    new_resource.updated_by_last_action(true)
   end
 
   unless new_resource.repository_hosting.nil?
     Chef::Log.info("Installing hosting module from #{new_resource.name}")
     loc = Mixlib::ShellOut.new('drush site-alias @hostmaster\
 --component="site_path"',
-                               user: 'aegir',
-                               group: 'aegir',
-                               environment: { 'HOME' => Dir.home('aegir') })
+                               user: "aegir",
+                               group: "aegir",
+                               environment: { "HOME" => Dir.home("aegir") })
     loc.run_command
     location_hostmaster = loc.stdout.strip
 
@@ -52,10 +53,9 @@ provision_#{new_resource.name}" do
       repository new_resource.repository_hosting
       revision new_resource.version
       action :sync
-      user 'aegir'
-      group 'aegir'
+      user "aegir"
+      group "aegir"
     end
-    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -67,20 +67,18 @@ provision_#{new_resource.name}" do
       recursive true
       action :delete
     end
-    new_resource.updated_by_last_action(true)
   end
   unless new_resource.repository_hosting.nil?
     loc = Mixlib::ShellOut.new('drush site-alias @hostmaster \
      --component="site_path"',
-                               user: 'aegir',
-                               group: 'aegir',
-                               environment: { 'HOME' => Dir.home('aegir') })
+                               user: "aegir",
+                               group: "aegir",
+                               environment: { "HOME" => Dir.home("aegir") })
     loc.run_command
     location_hostmaster = loc.stdout.strip
     directory location_hostmaster + "/modules/hosting_#{new_resource.name}" do
       recursive true
       action :delete
     end
-    new_resource.updated_by_last_action(true)
   end
 end

@@ -1,6 +1,6 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'rake'
+gem "rake"
 
 # Uncomment these lines if you want to live on the Edge:
 #
@@ -15,18 +15,19 @@ gem 'rake'
 # end
 
 group :unit do
-  gem 'rubocop'
-  gem 'foodcritic'
+  gem "rubocop"
+  gem "cookstyle"
+  gem "foodcritic"
 end
 
 # group :integration do
-#   gem 'berkshelf'
-#   gem 'test-kitchen'
-#   gem 'kitchen-vagrant'
+#   gem "berkshelf"
+#   gem "test-kitchen"
+#   gem "kitchen-vagrant"
 # end
 #
 # group :development do
-#   gem 'guard'
-#   gem 'guard-foodcritic'
-#   gem 'guard-kitchen'
+#   gem "guard"
+#   gem "guard-foodcritic"
+#   gem "guard-kitchen"
 # end

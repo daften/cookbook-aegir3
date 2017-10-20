@@ -1,6 +1,11 @@
 language: ruby
+sudo: false
 rvm:
-  - 1.9.3
+  - 2.1.9
+  - 2.2.6
+  - 2.3.1
+  - 2.4.0
+cache: bundler
 bundler_args: --without integration development
 script:
   - bundle exec rake travis
