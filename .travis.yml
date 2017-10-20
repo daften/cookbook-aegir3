@@ -36,4 +36,5 @@ matrix:
   include:
     - script:
       - chef exec delivery local all
-      env: UNIT_AND_LINT=1
+      # env: UNIT_AND_LINT=1
+      env: LINT=1
