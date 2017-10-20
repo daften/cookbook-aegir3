@@ -4,7 +4,7 @@ maintainer_email "info@picabit.be"
 license "Apache-2.0"
 description "Hosting System for Drupal Sites"
 long_description IO.read(File.join(File.dirname(__FILE__), "README.md"))
-version "0.1.4"
+version "0.1.5"
 chef_version ">= 12.5" if respond_to?(:chef_version)
 recipe "aegir3", "Install aegir with the chosen method (default: package)"
 recipe "aegir3::package", "Install aegir from package"
