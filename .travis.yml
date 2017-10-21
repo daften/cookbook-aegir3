@@ -35,6 +35,5 @@ script: kitchen verify ${INSTANCE}
 matrix:
   include:
     - script:
-      - chef exec delivery local all
-      # env: UNIT_AND_LINT=1
-      env: LINT=1
+      - chef exec delivery local [lint, syntax]
+      env: UNIT_AND_LINT=1
