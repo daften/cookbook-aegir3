@@ -1,11 +1,40 @@
-language: ruby
-sudo: false
-rvm:
-  - 2.1.9
-  - 2.2.6
-  - 2.3.1
-  - 2.4.0
-cache: bundler
-bundler_args: --without integration development
-script:
-  - bundle exec rake travis
+sudo: required
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+
+# Don't `bundle install` which takes about 1.5 mins
+install: echo "skip bundle install"
+
+services: docker
+
+env:
+  global:
+  - KITCHEN_YAML=.kitchen.yml
+  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml
+  matrix:
+  - INSTANCE=mysql-secure-debian-7
+  - INSTANCE=default-debian-8
+  - INSTANCE=mysql-secure-ubuntu-1404
+  # - INSTANCE=default-ubuntu-1604
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(chef shell-init bash)"
+  - chef --version
+  - cookstyle --version
+  - foodcritic --version
+
+script: kitchen verify ${INSTANCE}
+
+matrix:
+  include:
+    - script:
+      - chef exec delivery local lint
+      - chef exec delivery local syntax
+      env: UNIT_AND_LINT=1

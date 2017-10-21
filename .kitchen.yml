@@ -1,14 +1,29 @@
 ---
 driver:
   name: vagrant
+  customize:
+    memory: 1024
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
+  deprecations_as_errors: true
 
 platforms:
+  - name: debian-7
+    driver:
+      box: bento/debian-7.11
+
+  - name: debian-8
+    driver:
+      box: bento/debian-8.8
+
   - name: ubuntu-14.04
+    driver:
+      box: bento/ubuntu-14.04
+
   - name: ubuntu-16.04
-  - name: debian-7.8
+    driver:
+      box: bento/ubuntu-16.04
 
 suites:
   - name: default
@@ -16,10 +31,9 @@ suites:
       - recipe[apt::default]
       - recipe[aegir3::mysql]
       - recipe[aegir3::default]
-    attributes:
-    excludes:
-      - ubuntu-14.04
-      - debian-7.8
+    includes:
+      - ubuntu-16.04
+      - debian-8
 
   - name: mysql_secure
     run_list:
@@ -27,4 +41,6 @@ suites:
       - recipe[aegir3::mysql]
       - recipe[aegir3::mysql_secure]
       - recipe[aegir3::default]
-    attributes:
+    includes:
+      - ubuntu-14.04
+      - debian-7

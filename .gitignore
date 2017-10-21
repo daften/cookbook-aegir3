@@ -1,20 +1,13 @@
-*~
-*#
-.#*
-\#*#
-.*.sw[a-z]
-*.un~
-pkg/
+.vagrant
 
 # Berkshelf
-.vagrant
-/cookbooks
+Berksfile.lock
 
 # Bundler
 bin/*
 .bundle/*
+/Gemfile.lock
 
+# Kitchen
 .kitchen/
 .kitchen.local.yml
-.idea
-/Gemfile.lock

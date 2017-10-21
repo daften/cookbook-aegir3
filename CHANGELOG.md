@@ -3,6 +3,10 @@ aegir3 CHANGELOG
 
 This file is used to list changes made in each version of the aegir3 cookbook.
 
+0.1.6 (2017-10-22)
+------------------
+- Dieter Blomme - Fixed Travis integration
+
 0.1.5 (2017-10-20)
 ------------------
 - Dieter Blomme - Slow query log off by default for MySQL
